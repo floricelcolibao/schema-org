@@ -4,9 +4,8 @@ namespace Spatie\Skeleton\Test;
 
 use DateTime;
 use Spatie\SchemaOrg\BaseType;
-use PHPUnit\Framework\TestCase;
 
-class BaseTypeTest extends TestCase
+class BaseTypeTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function it_has_a_default_context()
@@ -43,11 +42,11 @@ class BaseTypeTest extends TestCase
     {
         $type = new DummyType();
 
-        $type->if(true, function (DummyType $type) {
+        $type->ifCondition(true, function (DummyType $type) {
             $type->setProperty('foo', 'bar');
         });
 
-        $type->if(false, function (DummyType $type) {
+        $type->ifCondition(false, function (DummyType $type) {
             $type->setProperty('baz', 'qux');
         });
 
@@ -243,12 +242,15 @@ class BaseTypeTest extends TestCase
           'child' => $child,
           'hello' => 'world',
         ]);
-        $type->setProperty('string', new class() {
-            public function __toString()
-            {
-                return 'lorem ipsum';
-            }
-        });
+        // $type->setProperty('string', new class() {
+        //     public function __toString()
+        //     {
+        //         return 'lorem ipsum';
+        //     }
+        // });
+
+        $string = new String();
+        $type->setProperty('string', $string);
 
         $expected = [
             '@context' => 'https://schema.org',
@@ -278,9 +280,9 @@ class BaseTypeTest extends TestCase
      */
     public function it_will_throw_invalid_property_exception_with_object_property()
     {
+        $class = new Property();
         $type = new DummyType();
-        $type->setProperty('foo', new class() {
-        });
+        $type->setProperty('foo', $class);
 
         $type->jsonSerialize();
     }
@@ -306,4 +308,14 @@ class DummyType extends BaseType
 
 class AnotherDummyType extends BaseType
 {
+}
+
+class String {
+    public function __toString(){
+        return 'lorem ipsum';
+    }
+}
+
+class Property {
+
 }

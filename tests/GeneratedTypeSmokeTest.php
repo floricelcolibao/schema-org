@@ -4,10 +4,10 @@ namespace Spatie\Skeleton\Test;
 
 use Spatie\SchemaOrg\Type;
 use Spatie\SchemaOrg\Schema;
-use PHPUnit\Framework\TestCase;
+// use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\LocalBusiness;
 
-class GeneratedTypeSmokeTest extends TestCase
+class GeneratedTypeSmokeTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function it_is_initializable()
